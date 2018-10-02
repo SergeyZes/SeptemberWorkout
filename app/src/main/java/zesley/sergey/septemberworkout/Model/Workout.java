@@ -1,6 +1,8 @@
 package zesley.sergey.septemberworkout.Model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Workout {
     private String description;
@@ -68,5 +70,9 @@ public class Workout {
 
     public void setRecordWeight(int recordWeight) {
         this.recordWeight = recordWeight;
+    }
+
+    public String getFormattedDate(){
+        return new SimpleDateFormat("dd MM yyyy", Locale.ROOT).format(recordDate);
     }
 }
