@@ -1,7 +1,9 @@
-package zesley.sergey.septemberworkout;
+package zesley.sergey.septemberworkout.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import zesley.sergey.septemberworkout.R;
 
 public class MainActivity extends AppCompatActivity {
 
