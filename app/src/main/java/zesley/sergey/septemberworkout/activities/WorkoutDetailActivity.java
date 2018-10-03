@@ -2,6 +2,7 @@ package zesley.sergey.septemberworkout.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ public class WorkoutDetailActivity extends AppCompatActivity {
     private ImageView image;
     private EditText repsCountEditText;
     private Button saveRecordButton;
+    private Workout workout;
 
 
     @Override
@@ -31,7 +33,7 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_detail);
 
-        Workout workout=new Workout("Подтягивание","Подтягивание на перикладине",0,new Date(),0);
+        workout=new Workout("Подтягивание","Подтягивание на перикладине",0,new Date(),0);
         initGUI(workout);
         addListeners();
     }
@@ -51,6 +53,36 @@ public class WorkoutDetailActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        saveRecordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               int rec_rep;
+               int rec_weight;
+               int rep;
+               int wei;
+
+               try {
+
+
+                   rep = Integer.parseInt(repsCountEditText.getText().toString());
+                   wei=weightSeekBar.getProgress();
+               } catch (Exception e)
+               {
+                   return;
+               }
+
+               if ((rep>workout.getRecordRepsCount()) || (wei>workout.getRecordWeight())){
+                  workout.setRecordDate(new Date());
+                  workout.setRecordRepsCount(rep);
+                  workout.setRecordWeight(wei);
+                  initGUI(workout);
+               }
+
+
 
             }
         });
