@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SeptemberWorkout</string>
+    <string name="date_text">Date:</string>
+    <string name="reps_count_text">Repeats number:</string>
+    <string name="record_weight_text">Weight:</string>
+    <string name="kg">kg</string>
+    <string name="save">Save</string>
 </resources>
