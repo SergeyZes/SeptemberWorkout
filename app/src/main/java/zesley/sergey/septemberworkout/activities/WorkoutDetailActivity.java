@@ -33,9 +33,10 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_detail);
 
-        workout=new Workout("Подтягивание","Подтягивание на перикладине",0,new Date(),0);
+        workout = new Workout("Подтягивание", "Подтягивание на перикладине", 0, new Date(), 0);
         initGUI(workout);
         addListeners();
+
     }
 
     private void addListeners() {
@@ -60,28 +61,24 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         saveRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               int rec_rep;
-               int rec_weight;
-               int rep;
-               int wei;
+                int rep;
+                int wei;
 
-               try {
+                try {
 
 
-                   rep = Integer.parseInt(repsCountEditText.getText().toString());
-                   wei=weightSeekBar.getProgress();
-               } catch (Exception e)
-               {
-                   return;
-               }
+                    rep = Integer.parseInt(repsCountEditText.getText().toString());
+                    wei = weightSeekBar.getProgress();
+                } catch (Exception e) {
+                    return;
+                }
 
-               if ((rep>workout.getRecordRepsCount()) || (wei>workout.getRecordWeight())){
-                  workout.setRecordDate(new Date());
-                  workout.setRecordRepsCount(rep);
-                  workout.setRecordWeight(wei);
-                  initGUI(workout);
-               }
-
+                if ((rep > workout.getRecordRepsCount()) || (wei > workout.getRecordWeight())) {
+                    workout.setRecordDate(new Date());
+                    workout.setRecordRepsCount(rep);
+                    workout.setRecordWeight(wei);
+                    initGUI(workout);
+                }
 
 
             }
@@ -90,21 +87,21 @@ public class WorkoutDetailActivity extends AppCompatActivity {
 
     private void initGUI(Workout workout) {
 
-        title=findViewById(R.id.workout_detail_title);
+        title = findViewById(R.id.workout_detail_title);
         title.setText(workout.getTitle());
-        recordDate=findViewById(R.id.workout_detail_record_date);
+        recordDate = findViewById(R.id.workout_detail_record_date);
         recordDate.setText(workout.getFormattedDate());
-        recordRepsCount=findViewById(R.id.workout_detail_record_reps_count);
+        recordRepsCount = findViewById(R.id.workout_detail_record_reps_count);
         recordRepsCount.setText(String.valueOf(workout.getRecordRepsCount()));
-        recordWeight=findViewById(R.id.workout_detail_record_weight);
+        recordWeight = findViewById(R.id.workout_detail_record_weight);
         recordWeight.setText(String.valueOf(workout.getRecordWeight()));
-        description=findViewById(R.id.workout_detail_description);
+        description = findViewById(R.id.workout_detail_description);
         description.setText(workout.getDescription());
 
-        weight=findViewById(R.id.workout_detail_weight);
-        weightSeekBar=findViewById(R.id.workout_detail_weight_seek_bar);
-        repsCountEditText=findViewById(R.id.workout_detail_reps_count_edit_text);
-        saveRecordButton=findViewById(R.id.workout_detail_save_button);
+        weight = findViewById(R.id.workout_detail_weight);
+        weightSeekBar = findViewById(R.id.workout_detail_weight_seek_bar);
+        repsCountEditText = findViewById(R.id.workout_detail_reps_count_edit_text);
+        saveRecordButton = findViewById(R.id.workout_detail_save_button);
 
 
     }
