@@ -5,4 +5,8 @@
     <string name="record_weight_text">Вес:</string>
     <string name="kg">кг</string>
     <string name="save">Сохранить</string>
+    <string name="pull_ups">Подтягивания</string>
+    <string name="push_ups">Отжимания</string>
+    <string name="squats">Приседания</string>
+
 </resources>

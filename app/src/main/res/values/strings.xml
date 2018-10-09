@@ -5,4 +5,7 @@
     <string name="record_weight_text">Weight:</string>
     <string name="kg">kg</string>
     <string name="save">Save</string>
+    <string name="pull_ups">Pulling-ups</string>
+    <string name="push_ups">Pushing_ups</string>
+    <string name="squats">Squatting</string>
 </resources>
