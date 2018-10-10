@@ -1,5 +1,7 @@
 package zesley.sergey.septemberworkout.activities;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -15,6 +18,7 @@ import zesley.sergey.septemberworkout.Model.Workout;
 import zesley.sergey.septemberworkout.R;
 
 public class WorkoutDetailActivity extends AppCompatActivity {
+    public static final String EXTRA_MESSAGE = "Result";
     private TextView title;
     private TextView recordDate;
     private TextView recordRepsCount;
@@ -25,6 +29,7 @@ public class WorkoutDetailActivity extends AppCompatActivity {
     private ImageView image;
     private EditText repsCountEditText;
     private Button saveRecordButton;
+    private Button shareRecordButton;
     private Workout workout;
 
 
@@ -36,6 +41,12 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         workout = new Workout("Подтягивание", "Подтягивание на перикладине", 0, new Date(), 0);
         initGUI(workout);
         addListeners();
+
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_MESSAGE, String.format(getString(R.string.record_message),
+                workout.getRecordRepsCount(), workout.getRecordWeight()));
+        setResult(RESULT_OK, intent);
+
 
     }
 
@@ -78,9 +89,30 @@ public class WorkoutDetailActivity extends AppCompatActivity {
                     workout.setRecordRepsCount(rep);
                     workout.setRecordWeight(wei);
                     initGUI(workout);
+
+                    Intent intent = new Intent();
+                    intent.putExtra(EXTRA_MESSAGE, String.format(getString(R.string.record_message),
+                            workout.getRecordRepsCount(), workout.getRecordWeight()));
+                    setResult(RESULT_OK, intent);
+
                 }
+            }
+        });
 
+        shareRecordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.record_subject_string));
+                intent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.record_message),
+                        workout.getRecordRepsCount(), workout.getRecordWeight()));
 
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException ex) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.send_exception_message), Toast.LENGTH_SHORT);
+                }
             }
         });
     }
@@ -102,6 +134,7 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         weightSeekBar = findViewById(R.id.workout_detail_weight_seek_bar);
         repsCountEditText = findViewById(R.id.workout_detail_reps_count_edit_text);
         saveRecordButton = findViewById(R.id.workout_detail_save_button);
+        shareRecordButton = findViewById(R.id.workout_detail_share);
 
 
     }

@@ -8,5 +8,10 @@
     <string name="pull_ups">Подтягивания</string>
     <string name="push_ups">Отжимания</string>
     <string name="squats">Приседания</string>
+    <string name="share_btn_text">Поделиться</string>
+    <string name="record_subject_string">Новый рекорд в подтягивании</string>
+    <string name="record_message">Текущий рекорд в подтягивании - %d повторов с весом в %d кг</string>
+    <string name="send_exception_message">Не найдено программы для отправки сообщения</string>
+    <string name="result_of_calling_details">Результат вызова окна подробностей ...</string>
 
 </resources>
