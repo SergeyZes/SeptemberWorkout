@@ -4,6 +4,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -102,19 +104,23 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         shareRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.record_subject_string));
-                intent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.record_message),
-                        workout.getRecordRepsCount(), workout.getRecordWeight()));
-
-                try {
-                    startActivity(intent);
-                } catch (ActivityNotFoundException ex) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.send_exception_message), Toast.LENGTH_SHORT);
-                }
+                sharePullupRecord();
             }
         });
+    }
+
+    private void sharePullupRecord() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.record_subject_string));
+        intent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.record_message),
+                workout.getRecordRepsCount(), workout.getRecordWeight()));
+
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException ex) {
+            Toast.makeText(getApplicationContext(), getString(R.string.send_exception_message), Toast.LENGTH_SHORT);
+        }
     }
 
     private void initGUI(Workout workout) {
@@ -137,5 +143,24 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         shareRecordButton = findViewById(R.id.workout_detail_share);
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.workout_detail_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.action_share:
+                sharePullupRecord();
+                return true;
+            case R.id.action_settings:
+            case R.id.action_quit:
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
