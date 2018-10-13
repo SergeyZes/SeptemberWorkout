@@ -2,8 +2,10 @@ package zesley.sergey.septemberworkout.activities;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +23,8 @@ import zesley.sergey.septemberworkout.R;
 
 public class WorkoutDetailActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "Result";
+    public static final String TAG = "WorkoutDetailActivity";
+
     private TextView title;
     private TextView recordDate;
     private TextView recordRepsCount;
@@ -38,9 +42,13 @@ public class WorkoutDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG,"OnCreate");
+
         setContentView(R.layout.activity_workout_detail);
 
-        workout = new Workout("Подтягивание", "Подтягивание на перикладине", 0, new Date(), 0);
+        if(savedInstanceState!=null && savedInstanceState.getSerializable("workout")!=null)
+            workout=(Workout) savedInstanceState.getSerializable("workout"); else
+            workout = new Workout("Подтягивание", "Подтягивание на перикладине", 0, new Date(), 0);
         initGUI(workout);
         addListeners();
 
@@ -159,8 +167,67 @@ public class WorkoutDetailActivity extends AppCompatActivity {
                 sharePullupRecord();
                 return true;
             case R.id.action_settings:
+                return true;
             case R.id.action_quit:
+// Передаем право убить приложение стартовой активити
+                Intent intent = new Intent();
+                intent.putExtra(EXTRA_MESSAGE, "Good-bye");
+                setResult(WorkoutListActivity.RESULT_KILL_CODE, intent);
+                finish();
+
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG,"onSaveInstanceState");
+        outState.putSerializable("workout",workout);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d(TAG,"onRestoreInstanceState");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG,"onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG,"onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG,"onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG,"onStop");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG,"onRestart");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG,"onDestroy");
     }
 }

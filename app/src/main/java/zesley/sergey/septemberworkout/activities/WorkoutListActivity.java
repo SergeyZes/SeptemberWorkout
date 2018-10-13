@@ -1,6 +1,7 @@
 package zesley.sergey.septemberworkout.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import zesley.sergey.septemberworkout.R;
 public class WorkoutListActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 1;
     public static final String TAG="WorkoutListActivity";
+    public static final int RESULT_KILL_CODE=5;
 
     Button buttonPullUps;
     Button buttonPushUps;
@@ -99,6 +101,29 @@ public class WorkoutListActivity extends AppCompatActivity {
             if (data.hasExtra(WorkoutDetailActivity.EXTRA_MESSAGE)){
               resultTextView.setText(data.getStringExtra(WorkoutDetailActivity.EXTRA_MESSAGE));
             }
+        } else
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_KILL_CODE) {
+            Intent i = new Intent(Intent.ACTION_MAIN);
+            i.addCategory(Intent.CATEGORY_HOME);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+
+//в зависимости от версии оси намертво убиваем приложение
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            {
+                finishAndRemoveTask();
+            }
+            else
+            {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                {
+                    finishAffinity();
+                } else
+                {
+                    finish();
+                }
+            }
+
         }
 
     }

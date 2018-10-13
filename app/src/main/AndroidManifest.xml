@@ -11,8 +11,10 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.WorkoutDetailActivity"
-            android:parentActivityName=".activities.WorkoutListActivity"></activity>
-        <activity android:name=".activities.WorkoutListActivity">
+            android:parentActivityName=".activities.WorkoutListActivity"
+            android:configChanges="orientation"></activity>
+        <activity android:name=".activities.WorkoutListActivity"
+            android:configChanges="orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
