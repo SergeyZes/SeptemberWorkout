@@ -1,10 +1,11 @@
 package zesley.sergey.septemberworkout.Model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class Workout {
+public class Workout implements Serializable {
     private String description;
     private String title;
     private String imageUrl;

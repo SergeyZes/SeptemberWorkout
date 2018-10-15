@@ -13,5 +13,7 @@
     <string name="record_message">Текущий рекорд в подтягивании - %d повторов с весом в %d кг</string>
     <string name="send_exception_message">Не найдено программы для отправки сообщения</string>
     <string name="result_of_calling_details">Результат вызова окна подробностей ...</string>
+    <string name="settings">Настройки</string>
+    <string name="quit">Выход</string>
 
 </resources>

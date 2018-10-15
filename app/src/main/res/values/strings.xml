@@ -13,4 +13,6 @@
     <string name="record_message">The current record in pulling up - %d reps with a weight of %d kg</string>
     <string name="send_exception_message">No programs found to send a message</string>
     <string name="result_of_calling_details">Result of calling details...</string>
+    <string name="settings">Settings</string>
+    <string name="quit">Quit</string>
 </resources>
