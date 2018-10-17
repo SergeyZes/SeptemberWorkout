@@ -17,4 +17,6 @@
     <string name="quit">Quit</string>
     <string name="title_mock_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, perspiciatis.</string>
     <string name="description_mock_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque autem, dolore nam nisi officia placeat saepe sit tempora tempore. Ad alias consequatur ducimus fuga in quas quo quod voluptas!</string>
+    <string name="record_is_documented">record is documented</string>
+    <string name="record_paid">record paid</string>
 </resources>

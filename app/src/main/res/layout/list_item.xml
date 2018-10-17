@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_height="wrap_content" android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="16dp"
@@ -126,4 +129,27 @@
         </LinearLayout>
 
     </RelativeLayout>
-</android.support.v7.widget.CardView>
+
+    </android.support.v7.widget.CardView>
+
+    <CheckBox
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:id="@+id/list_item_checkbox1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/record_is_documented"
+        />
+
+    <CheckBox
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:id="@+id/list_item_checkbox2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/record_paid"
+         />
+
+</LinearLayout>
