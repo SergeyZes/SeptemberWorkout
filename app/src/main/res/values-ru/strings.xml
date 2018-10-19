@@ -15,5 +15,9 @@
     <string name="result_of_calling_details">Результат вызова окна подробностей ...</string>
     <string name="settings">Настройки</string>
     <string name="quit">Выход</string>
+    <string name="title_mock_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, perspiciatis.</string>
+    <string name="description_mock_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque autem, dolore nam nisi officia placeat saepe sit tempora tempore. Ad alias consequatur ducimus fuga in quas quo quod voluptas!</string>
+    <string name="record_is_documented">рекорд задокументирован</string>
+    <string name="record_paid">рекорд оплачен</string>
 
 </resources>

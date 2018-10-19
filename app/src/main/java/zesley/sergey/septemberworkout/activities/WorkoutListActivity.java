@@ -1,6 +1,7 @@
 package zesley.sergey.septemberworkout.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import zesley.sergey.septemberworkout.R;
 
@@ -16,21 +20,58 @@ public class WorkoutListActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 1;
     public static final String TAG="WorkoutListActivity";
     public static final int RESULT_KILL_CODE=5;
+    public static final String IS_DOCUMENTED="isDocumented";
+    public static final String IS_PAID="isPaid";
 
     Button buttonPullUps;
     Button buttonPushUps;
     Button buttonSquats;
     TextView resultTextView;
 
+    CheckBox recDocumented_checkbox;
+    CheckBox recPaid_checkbox;
+    SharedPreferences sPref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_workout_list);
+        setContentView(R.layout.list_item);
+        recDocumented_checkbox =findViewById(R.id.list_item_checkbox1);
+        recPaid_checkbox =findViewById(R.id.list_item_checkbox2);
+        LoadPrefs();
+        recDocumented_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                sPref = getPreferences(MODE_PRIVATE);
+                SharedPreferences.Editor ed = sPref.edit();
+                ed.putBoolean(IS_DOCUMENTED, isChecked);
+                ed.commit();
+            }
+        });
 
-        initGUI();
-        addListeners();
-        Log.d(TAG,"onCreate()");
+        recPaid_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                sPref = getPreferences(MODE_PRIVATE);
+                SharedPreferences.Editor ed = sPref.edit();
+                ed.putBoolean(IS_PAID, isChecked);
+                ed.commit();
+
+            }
+        });
+//        setContentView(R.layout.activity_workout_list);
+//
+//        initGUI();
+//        addListeners();
+//        Log.d(TAG,"onCreate()");
+    }
+
+    private void LoadPrefs() {
+        sPref=getPreferences(MODE_PRIVATE);
+        recDocumented_checkbox.setChecked(sPref.getBoolean(IS_DOCUMENTED,false));
+        recPaid_checkbox.setChecked(sPref.getBoolean(IS_PAID,false));
+
     }
 
     @Override
