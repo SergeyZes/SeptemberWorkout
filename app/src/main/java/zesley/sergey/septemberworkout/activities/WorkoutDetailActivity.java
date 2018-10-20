@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Date;
+import java.util.List;
 
 import zesley.sergey.septemberworkout.Model.Workout;
 import zesley.sergey.septemberworkout.Model.WorkoutList;
@@ -39,6 +40,7 @@ public class WorkoutDetailActivity extends AppCompatActivity {
     private Button shareRecordButton;
     private Workout workout;
     private int workout_index;
+//    public Workout(String description, String title, int repsCount, Date date, int weight) {
 
 
     @Override
@@ -46,9 +48,18 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "OnCreate");
 
-        workout_index = getIntent().getIntExtra("workout_index", 0);
-        workout = WorkoutList.getInstance().getWorkouts().get(workout_index);
+        List<Workout> workouts = WorkoutList.getInstance().getWorkouts();
+        if (getIntent().getIntExtra("new_workout", 0) == 1) {
+            workout_index = workouts.size();
+            workout = new Workout("Описание упражнение №" + (workout_index + 1), "Упражнение №" + (workout_index + 1), 0, new Date(), 0);
+            workouts.add(workout);
+        } else {
+
+            workout_index = getIntent().getIntExtra("workout_index", 0);
+            workout = workouts.get(workout_index);
+        }
         setContentView(R.layout.activity_workout_detail);
+
 
         initGUI(workout);
         addListeners();
@@ -93,12 +104,6 @@ public class WorkoutDetailActivity extends AppCompatActivity {
                     workout.setRecordRepsCount(rep);
                     workout.setRecordWeight(wei);
                     initGUI(workout);
-
-                    Intent intent = new Intent();
-                    intent.putExtra(EXTRA_MESSAGE, String.format(getString(R.string.record_message),
-                            workout.getRecordRepsCount(), workout.getRecordWeight()));
-                    setResult(RESULT_OK, intent);
-
                 }
             }
         });

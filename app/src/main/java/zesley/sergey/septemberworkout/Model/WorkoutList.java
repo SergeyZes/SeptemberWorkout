@@ -17,7 +17,7 @@ public class WorkoutList {
     private WorkoutList() {
         workouts=new ArrayList<>();
         Random random= new Random();
-        for (int i=0; i<1000; i++){
+        for (int i=0; i<100; i++){
             Workout workout= new Workout("Упражнение №"+(i+1));
             workout.setDescription("Описание упражнения №"+(i+1));
             workout.setRecordDate(new Date());

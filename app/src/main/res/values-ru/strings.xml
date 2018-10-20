@@ -19,5 +19,6 @@
     <string name="description_mock_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque autem, dolore nam nisi officia placeat saepe sit tempora tempore. Ad alias consequatur ducimus fuga in quas quo quod voluptas!</string>
     <string name="record_is_documented">рекорд задокументирован</string>
     <string name="record_paid">рекорд оплачен</string>
+    <string name="layout_list_add_record_button">добавить новый рекорд</string>
 
 </resources>
