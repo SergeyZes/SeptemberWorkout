@@ -19,7 +19,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutViewHolder> {
     @Override
     public WorkoutViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item, viewGroup, false);
-        return new WorkoutViewHolder(itemView);
+        return new WorkoutViewHolder(itemView,this);
     }
 
     @Override

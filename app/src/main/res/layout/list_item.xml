@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/list_item_more"
+            android:id="@+id/list_item_delete_record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -21,7 +21,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="4dp"
             android:layout_marginRight="4dp"
-            android:src="@drawable/ic_more" />
+            android:src="@drawable/ic_delete" />
 
         <ImageView
             android:id="@+id/list_item_image_view"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginRight="4dp"
-            android:layout_toLeftOf="@id/list_item_more"
+            android:layout_toLeftOf="@id/list_item_delete_record"
             android:layout_toRightOf="@+id/list_item_image_view"
             android:ellipsize="end"
             android:maxLines="2"
