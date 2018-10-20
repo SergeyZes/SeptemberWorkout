@@ -19,6 +19,7 @@ import android.widget.Toast;
 import java.util.Date;
 
 import zesley.sergey.septemberworkout.Model.Workout;
+import zesley.sergey.septemberworkout.Model.WorkoutList;
 import zesley.sergey.septemberworkout.R;
 
 public class WorkoutDetailActivity extends AppCompatActivity {
@@ -37,27 +38,20 @@ public class WorkoutDetailActivity extends AppCompatActivity {
     private Button saveRecordButton;
     private Button shareRecordButton;
     private Workout workout;
+    private int workout_index;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG,"OnCreate");
+        Log.d(TAG, "OnCreate");
 
+        workout_index = getIntent().getIntExtra("workout_index", 0);
+        workout = WorkoutList.getInstance().getWorkouts().get(workout_index);
         setContentView(R.layout.activity_workout_detail);
 
-        if(savedInstanceState!=null && savedInstanceState.getSerializable("workout")!=null)
-            workout=(Workout) savedInstanceState.getSerializable("workout"); else
-            workout = new Workout("Подтягивание", "Подтягивание на перикладине", 0, new Date(), 0);
         initGUI(workout);
         addListeners();
-
-        Intent intent = new Intent();
-        intent.putExtra(EXTRA_MESSAGE, String.format(getString(R.string.record_message),
-                workout.getRecordRepsCount(), workout.getRecordWeight()));
-        setResult(RESULT_OK, intent);
-
-
     }
 
     private void addListeners() {
@@ -155,14 +149,13 @@ public class WorkoutDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.workout_detail_menu,menu);
+        getMenuInflater().inflate(R.menu.workout_detail_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.action_share:
                 sharePullupRecord();
                 return true;
@@ -172,7 +165,6 @@ public class WorkoutDetailActivity extends AppCompatActivity {
 // Передаем право убить приложение стартовой активити
                 Intent intent = new Intent();
                 intent.putExtra(EXTRA_MESSAGE, "Good-bye");
-                setResult(WorkoutListActivity.RESULT_KILL_CODE, intent);
                 finish();
 
                 return true;
@@ -184,50 +176,50 @@ public class WorkoutDetailActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(TAG,"onSaveInstanceState");
-        outState.putSerializable("workout",workout);
+        Log.d(TAG, "onSaveInstanceState");
+        outState.putSerializable("workout", workout);
 
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.d(TAG,"onRestoreInstanceState");
+        Log.d(TAG, "onRestoreInstanceState");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG,"onStart");
+        Log.d(TAG, "onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG,"onResume");
+        Log.d(TAG, "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG,"onPause");
+        Log.d(TAG, "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG,"onStop");
+        Log.d(TAG, "onStop");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d(TAG,"onRestart");
+        Log.d(TAG, "onRestart");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG,"onDestroy");
+        Log.d(TAG, "onDestroy");
     }
 }

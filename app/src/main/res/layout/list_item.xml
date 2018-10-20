@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_height="wrap_content" android:layout_width="match_parent"
-    android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="16dp"
@@ -38,7 +36,6 @@
             android:background="@color/colorGray" />
 
         <TextView
-            android:textColor="@color/colorPrimaryDark"
             android:id="@+id/list_item_title_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,6 +46,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/title_mock_text"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -67,7 +65,7 @@
             android:id="@+id/list_item_horizontal_separator"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_below="@id/list_item_description_text_view"
+            android:layout_below="@id/list_item_image_view"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="6dp"
             android:layout_marginRight="8dp"
@@ -82,8 +80,7 @@
             android:layout_marginTop="4dp"
             android:orientation="horizontal">
 
-            <LinearLayout
-                style="@style/RecordLinearLayout">
+            <LinearLayout style="@style/RecordLinearLayout">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -91,13 +88,13 @@
                     android:src="@drawable/ic_weight" />
 
                 <TextView
+                    android:id="@+id/list_item_record_weight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="30 кг" />
             </LinearLayout>
 
-            <LinearLayout
-                style="@style/RecordLinearLayout">
+            <LinearLayout style="@style/RecordLinearLayout">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -105,14 +102,14 @@
                     android:src="@drawable/ic_counter" />
 
                 <TextView
+                    android:id="@+id/list_item_record_reps_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="25 раз" />
 
             </LinearLayout>
 
-            <LinearLayout
-                style="@style/RecordLinearLayout">
+            <LinearLayout style="@style/RecordLinearLayout">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -120,6 +117,7 @@
                     android:src="@drawable/ic_calendar" />
 
                 <TextView
+                    android:id="@+id/list_item_record_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="12.12.2012" />
@@ -130,26 +128,4 @@
 
     </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
-
-    <CheckBox
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:id="@+id/list_item_checkbox1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/record_is_documented"
-        />
-
-    <CheckBox
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:id="@+id/list_item_checkbox2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/record_paid"
-         />
-
-</LinearLayout>
+</android.support.v7.widget.CardView>
