@@ -11,9 +11,15 @@ import java.util.List;
 import zesley.sergey.septemberworkout.Model.Workout;
 import zesley.sergey.septemberworkout.Model.WorkoutList;
 import zesley.sergey.septemberworkout.R;
+import zesley.sergey.septemberworkout.interfaces.OnListItemClickListener;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutViewHolder> {
     List<Workout> workoutList = WorkoutList.getInstance().getWorkouts();
+    private OnListItemClickListener itemClickListener;
+
+    public WorkoutAdapter(OnListItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
 
     @NonNull
     @Override
@@ -24,7 +30,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull WorkoutViewHolder workoutViewHolder, int i) {
-        workoutViewHolder.bindView(workoutList.get(i),i);
+        workoutViewHolder.bindView(workoutList.get(i),i,itemClickListener);
 
 
     }

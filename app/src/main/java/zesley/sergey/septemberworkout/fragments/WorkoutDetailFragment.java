@@ -1,14 +1,16 @@
-package zesley.sergey.septemberworkout.activities;
+package zesley.sergey.septemberworkout.fragments;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,16 +18,21 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import java.util.Date;
 import java.util.List;
 
 import zesley.sergey.septemberworkout.Model.Workout;
 import zesley.sergey.septemberworkout.Model.WorkoutList;
 import zesley.sergey.septemberworkout.R;
+import zesley.sergey.septemberworkout.interfaces.OnListItemClickListener;
 
-public class WorkoutDetailActivity extends AppCompatActivity {
+public class WorkoutDetailFragment extends Fragment {
     public static final String EXTRA_MESSAGE = "Result";
-    public static final String TAG = "WorkoutDetailActivity";
+    public static final String TAG = "WorkoutDetailFragment";
+    public static final String WORKOUT_INDEX = "workoutIndex";
 
     private TextView title;
     private TextView recordDate;
@@ -39,31 +46,54 @@ public class WorkoutDetailActivity extends AppCompatActivity {
     private Button saveRecordButton;
     private Button shareRecordButton;
     private Workout workout;
-    private int workout_index;
+    private int workout_index = 0;
+
+    private OnListItemClickListener listener;
+
+    @Override
+    public void onAttach(Context context) {
+        if (context instanceof OnListItemClickListener) {
+            listener = (OnListItemClickListener) context;
+        }
+        super.onAttach(context);
+    }
+
+
+    public static WorkoutDetailFragment initFragment(int workoutIndex) {
+        WorkoutDetailFragment fragment = new WorkoutDetailFragment();
+        Bundle arguments = new Bundle();
+        arguments.putInt(WORKOUT_INDEX, workoutIndex);
+        fragment.setArguments(arguments);
+        return fragment;
+
+    }
 //    public Workout(String description, String title, int repsCount, Date date, int weight) {
 
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(TAG, "OnCreate");
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_workout_detail, container, false);
+
+        workout_index=getArguments().getInt(WORKOUT_INDEX,0);
 
         List<Workout> workouts = WorkoutList.getInstance().getWorkouts();
-        if (getIntent().getIntExtra("new_workout", 0) == 1) {
+
+        if (workout_index==-1)
+        {
+            //добавили новую запись
             workout_index = workouts.size();
             workout = new Workout("Описание упражнение №" + (workout_index + 1), "Упражнение №" + (workout_index + 1), 0, new Date(), 0);
             workouts.add(workout);
-        } else {
 
-            workout_index = getIntent().getIntExtra("workout_index", 0);
+        } else {
             workout = workouts.get(workout_index);
         }
-        setContentView(R.layout.activity_workout_detail);
-
-
-        initGUI(workout);
+        initGUI(root, workout);
         addListeners();
+        return root;
     }
+
 
     private void addListeners() {
         weightSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -90,6 +120,7 @@ public class WorkoutDetailActivity extends AppCompatActivity {
                 int rep;
                 int wei;
 
+
                 try {
 
 
@@ -103,7 +134,7 @@ public class WorkoutDetailActivity extends AppCompatActivity {
                     workout.setRecordDate(new Date());
                     workout.setRecordRepsCount(rep);
                     workout.setRecordWeight(wei);
-                    initGUI(workout);
+                    initGUI(getView(), workout);
                 }
             }
         });
@@ -111,6 +142,11 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         shareRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YoYo.with(Techniques.Tada)
+                        .duration(700)
+                        .repeat(5)
+                        .playOn(shareRecordButton);
+
                 sharePullupRecord();
             }
         });
@@ -126,105 +162,63 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         try {
             startActivity(intent);
         } catch (ActivityNotFoundException ex) {
-            Toast.makeText(getApplicationContext(), getString(R.string.send_exception_message), Toast.LENGTH_SHORT);
+            Toast.makeText(getView().getContext(), getString(R.string.send_exception_message), Toast.LENGTH_SHORT);
         }
     }
 
-    private void initGUI(Workout workout) {
+    private void initGUI(View view, Workout workout) {
 
-        title = findViewById(R.id.workout_detail_title);
+        title = view.findViewById(R.id.workout_detail_title);
         title.setText(workout.getTitle());
-        recordDate = findViewById(R.id.workout_detail_record_date);
+        recordDate = view.findViewById(R.id.workout_detail_record_date);
         recordDate.setText(workout.getFormattedDate());
-        recordRepsCount = findViewById(R.id.workout_detail_record_reps_count);
+        recordRepsCount = view.findViewById(R.id.workout_detail_record_reps_count);
         recordRepsCount.setText(String.valueOf(workout.getRecordRepsCount()));
-        recordWeight = findViewById(R.id.workout_detail_record_weight);
+        recordWeight = view.findViewById(R.id.workout_detail_record_weight);
         recordWeight.setText(String.valueOf(workout.getRecordWeight()));
-        description = findViewById(R.id.workout_detail_description);
+        description = view.findViewById(R.id.workout_detail_description);
         description.setText(workout.getDescription());
 
-        weight = findViewById(R.id.workout_detail_weight);
-        weightSeekBar = findViewById(R.id.workout_detail_weight_seek_bar);
-        repsCountEditText = findViewById(R.id.workout_detail_reps_count_edit_text);
-        saveRecordButton = findViewById(R.id.workout_detail_save_button);
-        shareRecordButton = findViewById(R.id.workout_detail_share);
+        weight = view.findViewById(R.id.workout_detail_weight);
+        weightSeekBar = view.findViewById(R.id.workout_detail_weight_seek_bar);
+        repsCountEditText = view.findViewById(R.id.workout_detail_reps_count_edit_text);
+        saveRecordButton = view.findViewById(R.id.workout_detail_save_button);
+        shareRecordButton = view.findViewById(R.id.workout_detail_share);
 
 
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.workout_detail_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_share:
-                sharePullupRecord();
-                return true;
-            case R.id.action_settings:
-                return true;
-            case R.id.action_quit:
-// Передаем право убить приложение стартовой активити
-                Intent intent = new Intent();
-                intent.putExtra(EXTRA_MESSAGE, "Good-bye");
-                finish();
-
-                return true;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d(TAG, "onSaveInstanceState");
-        outState.putSerializable("workout", workout);
-
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        Log.d(TAG, "onRestoreInstanceState");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause");
-    }
-
-    @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
-        Log.d(TAG, "onStop");
+        listener.refreshAdapter();
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d(TAG, "onRestart");
-    }
+    //    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.workout_detail_menu, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_share:
+//                sharePullupRecord();
+//                return true;
+//            case R.id.action_settings:
+//                return true;
+//            case R.id.action_quit:
+//// Передаем право убить приложение стартовой активити
+//                Intent intent = new Intent();
+//                intent.putExtra(EXTRA_MESSAGE, "Good-bye");
+//                finish();
+//
+//                return true;
+//
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+
+
 }
