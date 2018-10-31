@@ -134,6 +134,7 @@ public class WorkoutDetailFragment extends Fragment {
                     workout.setRecordDate(new Date());
                     workout.setRecordRepsCount(rep);
                     workout.setRecordWeight(wei);
+                    listener.refreshOneInList();
                     initGUI(getView(), workout);
                 }
             }

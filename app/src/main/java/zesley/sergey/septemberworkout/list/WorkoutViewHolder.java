@@ -69,6 +69,8 @@ public class WorkoutViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 WorkoutList.getInstance().getWorkouts().remove(index);
                 adapter.notifyDataSetChanged();
+                listener.checkDeletedIndex(index);
+
             }
         });
 
